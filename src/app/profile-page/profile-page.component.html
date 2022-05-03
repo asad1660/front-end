@@ -1,0 +1,68 @@
+
+<div class="container bootstrap snippets bootdey">
+    <div class="row">
+      <div class="profile-nav col-md-3">
+          <div class="panel">
+              <div class="user-heading round">
+                  <a href="#">
+                      <img [src]="userData?.profile_picture" alt="">
+                  </a>
+                  <h1>{{userData?.name}}</h1>
+              </div>
+    
+              <ul class="nav nav-pills nav-stacked">
+                  <li class="active"><a routerLinkActive="active" 
+                    routerLink="/home" (click)="edit=false"> <i class="fa fa-user"></i> Profile</a></li>
+                  <li><a routerLinkActive="active" 
+                    routerLink="/home" (click)="edit=true"> <i class="fa fa-edit"></i> Edit profile</a></li>
+              </ul>
+          </div>
+      </div>
+      <div *ngIf="!edit"class="profile-info col-md-9">
+          <div class="panel">
+              <div class="bio-graph-heading">
+                  Aliquam ac magna metus. Nam sed arcu non tellus fringilla fringilla ut vel ispum. Aliquam ac magna metus.
+              </div>
+              <div class="panel-body bio-graph-info">
+                  <h1>Bio Graph</h1>
+                  <div class="row">
+                      <div class="bio-row">
+                          <p><span>Name </span>: {{userData?.name}}</p>
+                      </div>
+                      <div class="bio-row">
+                          <p><span>Age </span>: {{userData?.age}}</p>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div>
+              <div class="row" >
+                  <div  *ngFor="let data of userData?.Experiences ; let i = index">
+                  <div class="col-md-6">
+                      <div class="panel">
+                          <div class="panel-body">
+                              <div class="bio-chart">
+                                <!-- <canvas width="100" height="100px"></canvas> -->
+                                 <img [src]="data?.img_url" style="display:inline;width:100px;height:100px;">
+                             
+                              </div>
+                              <div class="bio-desk">
+                                  <h4 class="red">Company: {{data?.company}}</h4>
+                                  <p>Job title: {{data?.job_title}}</p>
+                                  <p>Job Description: {{data?.job_description}}</p>
+                                  <p>Started : {{data?.start_date | date: 'MMM d, y'}}</p>
+                                  <p *ngIf="data?.end_date">Ended : {{data?.end_date | date: 'MMM d, y'}}</p>
+                                  <p *ngIf="!data?.end_date">Continued</p>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+      </div>
+      <div *ngIf="edit" class="profile-info col-md-9">
+        <app-user-page></app-user-page>
+      </div>
+    </div>
+    </div>

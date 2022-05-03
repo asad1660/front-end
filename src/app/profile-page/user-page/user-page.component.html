@@ -1,0 +1,91 @@
+<div class="container">
+    <div class="row custom-wrapper">
+      <div class="col-md-12">
+  
+        <!-- Form starts -->
+
+
+        <form [formGroup]="registrationForm">
+            <div class="avatar-upload">
+                <div class="avatar-edit">
+                  <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg" #fileInput (change)="uploadFile($event)" />
+                  <label for="imageUpload" *ngIf="editFile" [ngClass]="['custom-label', 'upload-image']"></label>
+                  <label *ngIf="removeUpload" [ngClass]="['custom-label', 'remove-image']" (click)="removeUploadedFile()"></label>
+                </div>
+                <div class="avatar-preview">
+                  <div id="imagePreview" [style.backgroundImage]="'url('+ imageUrl +')'">
+                  </div>
+                </div>
+              </div>
+            <div class="mb-3">
+                <label >Name</label>
+                <input type="text" class="form-control" formControlName="name">
+                <!-- error block -->
+
+              </div>
+            
+              <div class="mb-3">
+                <label >Age</label>
+                <input type="number" class="form-control" min="10" formControlName="age" >
+
+              </div>
+
+              <div formArrayName="Experiences">
+                <h5 >Add Experience</h5>
+                <div>
+                  <button type="button" class="btn btn-sm btn-success mb-3 btn-block" (click)="addExperiance()">Add Experience</button>
+                  <ul class="subjectList">
+                    <li *ngFor="let item of Experiences.controls; let i = index">
+                      <div [formGroupName]="i" class="row">
+                        <div class="col-xs-12 col-md-6 form-group">
+                      <label >Job title</label>
+                      <input type="text" class="form-control" name="job_title" formControlName="job_title">
+                      </div>
+                      <div class="col-xs-12 col-md-6 form-group">
+                      <label >Company</label>
+                      <input type="text" class="form-control" name="company" formControlName="company">
+                      </div>
+                      <div class="col-xs-12 col-md-6 form-group">
+                      <label >Company logo</label>
+                          <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg" #fileInput  (change)="uploadLogoFile($event,i)" />
+                      </div>
+                    <div class="col-xs-12 col-md-6 form-group">
+                      <label >Job Description</label>
+                      <input type="text" class="form-control" name="job_description" formControlName="job_description">
+                    </div>
+                    <div class="col-xs-12 col-md-12 form-group">
+                      <div class="bio-graph-heading">
+                    <b>Note:</b>If you're currently working then there's no need for end date
+                    </div>
+                      
+                    </div>
+                    <div class="col-xs-12 col-md-6 form-group">
+                      <label >Start Date</label>
+                      <input type="date" class="form-control" name="start_date" formControlName="start_date">
+                    </div>
+                      <div class="col-xs-12 col-md-6 form-group">
+                      <label >End Date</label>
+                      <input type="date" class="form-control" name="end_date" formControlName="end_date" (change)="endDateValidation($event,item,i)">
+                    </div>
+                    <div class="col-xs-12 col-md-12 form-group">
+                      <br>
+                    </div>
+      
+                    <div class="col-xs-12 col-md-12 form-group">
+                      <button *ngIf="i != 0" type="button" class="btn btn-danger" (click)="removeExperience(i)">Delete Row</button>
+                    </div>
+                  </div>
+                 
+                    </li>
+                  </ul>
+                </div>
+      
+                <!-- Submit Button -->
+                <button type="submit" (click)="onSubmit()" class="btn btn-warning">Submit</button>
+              </div>
+        </form>
+      <!-- </div><div class="spinner-border"></div> -->
+      </div>
+    
+  </div>
+  <loading *ngIf="!loading"></loading>
